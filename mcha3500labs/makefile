@@ -32,6 +32,7 @@ BIN_DIR = bin
 # Source files
 SRCDIR = src
 SRCSTMCUBEDIR = $(STM32CUBE_ROOT)/Drivers/STM32F4xx_HAL_Driver/Src
+MPU6050LIB_ROOT = TM_MPU6050
 
 # Source to compile only for target processor
 SRC_STM = \
