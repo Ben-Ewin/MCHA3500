@@ -31,6 +31,7 @@ int main(void)
 
     pendulum_init();
     motor_PWM_init();
+    motor_encoder_init();
 
     // Start scheduler
     osKernelStart();

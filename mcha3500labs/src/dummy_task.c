@@ -1,5 +1,6 @@
 #include "dummy_task.h"
 #include "pendulum.h"
+#include "motor.h"
 
 #include <stdint.h>
 
@@ -21,6 +22,7 @@ static uint8_t _is_running = 0;
 static uint8_t _is_init = 0;
 
 static float pot_value = 0.0;
+static int32_t enc_value = 0;
 
 void dummy_task_init(void)
 {
@@ -65,6 +67,8 @@ void dummy_task_update(void *arg)
         pot_value = pendulum_read_voltage();
         printf("Potentiometer value: %f\n", pot_value);
 
+        enc_value = motor_encoder_getValue();
+        printf("Encoder value: %ld\n\n", enc_value);
         // Non-blocking delay to wait
         osDelay(1000);
     }
