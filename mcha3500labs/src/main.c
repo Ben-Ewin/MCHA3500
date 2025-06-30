@@ -8,6 +8,7 @@
 #include "heartbeat_task.h"
 #include "dummy_task.h"
 #include "pendulum.h"
+#include "motor.h"
 
 static void SystemClock_Config(void);
 static void Error_Handler(void);
@@ -29,6 +30,7 @@ int main(void)
     dummy_task_init();
 
     pendulum_init();
+    motor_PWM_init();
 
     // Start scheduler
     osKernelStart();
