@@ -1,4 +1,5 @@
 #include "dummy_task.h"
+#include "pendulum.h"
 
 #include <stdint.h>
 
@@ -18,6 +19,8 @@ static osThreadAttr_t _dummyTaskThreadAttr =
 
 static uint8_t _is_running = 0;
 static uint8_t _is_init = 0;
+
+static float pot_value = 0.0;
 
 void dummy_task_init(void)
 {
@@ -59,7 +62,8 @@ void dummy_task_update(void *arg)
     UNUSED(arg);
     while(1)
     {
-        // TODO: Add print statements for motor and potentiometer
+        pot_value = pendulum_read_voltage();
+        printf("Potentiometer value: %f\n", pot_value);
 
         // Non-blocking delay to wait
         osDelay(1000);
