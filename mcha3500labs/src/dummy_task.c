@@ -65,10 +65,10 @@ void dummy_task_update(void *arg)
     while(1)
     {
         pot_value = pendulum_read_voltage();
-        printf("Potentiometer value: %f\n", pot_value);
+        // printf("Potentiometer value: %f\n", pot_value);
 
         enc_value = motor_encoder_getValue();
-        printf("Encoder value: %ld\n\n", enc_value);
+        // printf("Encoder value: %ld\n\n", enc_value);
         // Non-blocking delay to wait
         osDelay(1000);
     }

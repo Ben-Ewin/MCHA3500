@@ -17,6 +17,7 @@ int main(void)
 {
     HAL_Init();
     SystemClock_Config();
+    // some change
 
     // Initialise scheduler
     osKernelInitialize();
