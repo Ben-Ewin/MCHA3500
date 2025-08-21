@@ -7,6 +7,7 @@
 #include "cmd_line_buffer.h"
 #include "cmd_parser.h"
 #include "pendulum.h"
+#include "data_logging.h"
 
 static float pot_value = 0.0;
 
@@ -34,6 +35,7 @@ static CMD_T cmd_table[] =
     {_reset                         , "reset"       , ""                          , "Restarts the system."                     } ,
     {heartbeat_cmd                  , "heartbeat"   , "[start|stop]"              , "Get status or start/stop heartbeat task"  } ,
     {_cmd_getPotentiometerVoltage   , "getPot"      , ""                          , "Displays the potentiometer voltage level."} ,
+    {pend_logging_start             , "getLog"      , ""                          , "Logs to the serial monitor"               } ,
 };
 enum {CMD_TABLE_SIZE = sizeof(cmd_table)/sizeof(CMD_T)};
 enum {CMD_MAX_TOKENS = 5};      // Maximum number of tokens to process (command + arguments)
@@ -44,15 +46,15 @@ static void _print_chip_pinout(void);
 
 void _cmd_getPotentiometerVoltage(int argc, char *argv[])
 {
-/* TODO: Supress compiler warnings for unused arguments */
-UNUSED(argc);
-UNUSED(argv);
+    /* TODO: Supress compiler warnings for unused arguments */
+    UNUSED(argc);
+    UNUSED(argv);
 
-/* TODO: Read the potentiometer voltage */
-pot_value = pendulum_read_voltage();
+    /* TODO: Read the potentiometer voltage */
+    pot_value = pendulum_read_voltage();
 
-/* TODO: Print the voltage to the serial terminal */
-printf("Potentiometer value: %f\n", pot_value);
+    /* TODO: Print the voltage to the serial terminal */
+    printf("Potentiometer value: %f\n", pot_value);
 }
 
 
