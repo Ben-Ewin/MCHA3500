@@ -14,15 +14,17 @@ uint32_t start_time;
 uint32_t current_time;
 uint32_t elapsed_time_ms;
 
+static void (*log_function)(void);
+
 /* Function declarations */
-static void log_pendulum(void *argument);
+static void log_pointer(void *argument);
+
+/* Function declarations */
+static void log_data(void);
 
 /* Function defintions */
-static void log_pendulum(void *argument)
+static void log_data(void)
 {
-    /*  Supress compiler warnings for unused arguments */
-    UNUSED(argument);
-
     current_time = osKernelGetTickCount();
     /*  Read the potentiometer voltage */
     pot_value = pendulum_read_voltage();
@@ -39,29 +41,40 @@ static void log_pendulum(void *argument)
     /* Stop logging once 2 seconds is reached */
     if (logCount >= 400)
     {
-        pend_logging_stop();
+        logging_stop();
     }
 }
 
 void logging_init(void)
 {
     /* TODO: Initialise timer for use with pendulum data logging */
-    dataLogging_id = osTimerNew(log_pendulum, osTimerPeriodic, (void *)5, NULL);
+    dataLogging_id = osTimerNew(log_pointer, osTimerPeriodic, (void *)5, NULL);
 }
 
-void pend_logging_start(void)
+static void log_pointer(void *argument)
 {
+    UNUSED(argument);
+    /* Call function pointed to by log_function */
+    (*log_function)();
+}
+
+void logging_start(void)
+{
+    log_function = &log_data;
+
     /*  Reset the log counter */
     logCount = 0;
     /*  Start data logging timer at 200Hz */
     osStatus_t status = osTimerStart(dataLogging_id, 5);
+    UNUSED(status);
     start_time = osKernelGetTickCount();
 
-    log_pendulum(NULL); // where tf is this function supposed to go to run continuously???????????????????
+    log_data();
 }
 
-void pend_logging_stop(void)
+void logging_stop(void)
 {
     /*  Stop data logging timer */
     osStatus_t status = osTimerStop(dataLogging_id);
+    UNUSED(status);
 }
