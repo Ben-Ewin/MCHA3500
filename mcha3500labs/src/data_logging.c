@@ -2,6 +2,7 @@
 #include "cmsis_os2.h"
 #include "data_logging.h"
 #include "pendulum.h"
+#include "IMU.h"
 
 /* Variable declarations */
 uint16_t logCount;
@@ -81,26 +82,39 @@ void logging_stop(void)
 
 void imu_logging_start(void)
 {
-    /* TODO: Change function pointer to the imu logging function (log_imu) */
+    /* Change function pointer to the imu logging function (log_imu) */
+    log_function = &log_imu;
 
-    /* TODO: Reset the log counter */
+    /* Reset the log counter */
+    logCount = 0;
 
-    /* TODO: Start data logging at 200Hz */
+    /* Start data logging at 200Hz */
+    osStatus_t status = osTimerStart(dataLogging_id, 5);
+    UNUSED(status);
+    start_time = osKernelGetTickCount();
+
+    log_imu();
 }
 
 static void log_imu(void)
 {
-    /* TODO: Read IMU */
-
-    /* TODO: Get the imu angle from accelerometer readings */
-
-    /* TODO: Get the imu X gyro reading */
-
-    /* TODO: Read the potentiometer voltage */
-
-    /* TODO: Print the time, accelerometer angle, gyro angular velocity and pot voltage values to the Serial terminal in the format %f,%f,%f,%f\n */
-
-    /* TODO: Increment log count */
-
-    /* TODO: Stop logging once 5 seconds is reached */
+    current_time = osKernelGetTickCount();
+    /* Read IMU */
+    IMU_read();
+    /* Get the imu angle from accelerometer readings */
+    double Theta_X = get_acc_angle();
+    /* Get the imu X gyro reading */
+    float GyroX = get_gyroX();
+    /* Read the potentiometer voltage */
+    pot_value = pendulum_read_voltage();
+    /* Print the time, accelerometer angle, gyro angular velocity and pot voltage values to the Serial terminal in the format %f,%f,%f,%f\n */
+    elapsed_time_ms = (current_time - start_time) * osKernelGetTickFreq() / 1000;
+    printf("%f, %f, %f, %f\n", elapsed_time_ms / 1000.0f, Theta_X, GyroX, pot_value);
+    /* Increment log count */
+    logCount = logCount + 1;
+    /* Stop logging once 5 seconds is reached */
+    if (logCount >= 1000)
+    {
+        logging_stop();
+    }
 }
