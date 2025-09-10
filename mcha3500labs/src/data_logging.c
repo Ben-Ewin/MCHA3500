@@ -78,3 +78,29 @@ void logging_stop(void)
     osStatus_t status = osTimerStop(dataLogging_id);
     UNUSED(status);
 }
+
+void imu_logging_start(void)
+{
+    /* TODO: Change function pointer to the imu logging function (log_imu) */
+
+    /* TODO: Reset the log counter */
+
+    /* TODO: Start data logging at 200Hz */
+}
+
+static void log_imu(void)
+{
+    /* TODO: Read IMU */
+
+    /* TODO: Get the imu angle from accelerometer readings */
+
+    /* TODO: Get the imu X gyro reading */
+
+    /* TODO: Read the potentiometer voltage */
+
+    /* TODO: Print the time, accelerometer angle, gyro angular velocity and pot voltage values to the Serial terminal in the format %f,%f,%f,%f\n */
+
+    /* TODO: Increment log count */
+
+    /* TODO: Stop logging once 5 seconds is reached */
+}

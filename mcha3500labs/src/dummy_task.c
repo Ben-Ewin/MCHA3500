@@ -7,6 +7,7 @@
 #include "stm32f4xx_hal.h"
 #include "cmsis_os2.h"
 #include "uart.h"
+#include "IMU.h"
 
 static void dummy_task_update(void *arg);
 
@@ -64,12 +65,25 @@ void dummy_task_update(void *arg)
     UNUSED(arg);
     while(1)
     {
-        pot_value = pendulum_read_voltage();
-        // printf("Potentiometer value: %f\n", pot_value);
+        // pot_value = pendulum_read_voltage();
+        // // printf("Potentiometer value: %f\n", pot_value);
 
-        enc_value = motor_encoder_getValue();
-        // printf("Encoder value: %ld\n\n", enc_value);
-        // Non-blocking delay to wait
+        // enc_value = motor_encoder_getValue();
+        // // printf("Encoder value: %ld\n\n", enc_value);
+        // // Non-blocking delay to wait
+
+
+        // IMU_read();
+        // float GyroX = get_gyroX();
+        // float AccY = get_accY();
+        // float AccZ = get_accZ();
+        // double Theta_X = get_acc_angle();
+        // // printf("AccX: %lf\n", GyroX);
+        // // printf("AccY: %lf\n", AccY);
+        // // printf("AccZ: %lf\n\n", AccZ);
+        // printf("Theta X: %lf\n", Theta_X);
+
+        
         osDelay(1000);
     }
 }
