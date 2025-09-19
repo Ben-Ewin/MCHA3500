@@ -8,6 +8,7 @@
 #include "cmd_parser.h"
 #include "pendulum.h"
 #include "data_logging.h"
+#include "controller.h"
 
 static float pot_value = 0.0;
 
@@ -24,6 +25,7 @@ typedef struct
 static void _help(int, char *[]);
 static void _reset(int, char *[]);
 static void _cmd_getPotentiometerVoltage(int, char *[]);
+static void _cmd_updateControl(int argc, char *argv[]);
 
 // Modules that provide commands
 #include "heartbeat_cmd.h"
@@ -37,6 +39,7 @@ static CMD_T cmd_table[] =
     {_cmd_getPotentiometerVoltage   , "getPot"      , ""                          , "Displays the potentiometer voltage level."} ,
     {logging_start                  , "getLog"      , ""                          , "Logs to the serial monitor"               } ,
     {imu_logging_start              , "IMU_Log"     , ""                          , "Logs IMU data to the serial monitor"      } ,
+    {_cmd_updateControl             , "getControl"  , "[x1] [x2] [x3] [x4]"       , "Gets controller value"                    } ,
 };
 enum {CMD_TABLE_SIZE = sizeof(cmd_table)/sizeof(CMD_T)};
 enum {CMD_MAX_TOKENS = 5};      // Maximum number of tokens to process (command + arguments)
@@ -205,3 +208,27 @@ int _makeargv(char *s, char *argv[], int argvsize)
 }
 
 
+static void _cmd_updateControl(int argc, char *argv[])
+{
+    // Check for correct input arguments
+    if(argc != 5)
+    {
+        printf("Incorrect arguments\n");
+    }
+    else
+    {
+        float x1 = atof(argv[1]);
+        float x2 = atof(argv[2]);
+        float x3 = atof(argv[3]);
+        float x4 = atof(argv[4]);
+        /* TODO: Update states using ctrl_set_xi functions */
+        ctrl_set_x1(x1);
+        ctrl_set_x2(x2);
+        ctrl_set_x3(x3);
+        ctrl_set_x4(x4);
+        /* TODO: Update controller value */
+        ctrl_update();
+        /* Print control action */
+        printf("%f\n", getControl());
+    }
+}

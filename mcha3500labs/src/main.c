@@ -11,6 +11,7 @@
 #include "motor.h"
 #include "data_logging.h"
 #include "IMU.h"
+#include "controller.h"
 
 static void SystemClock_Config(void);
 static void Error_Handler(void);
@@ -39,6 +40,8 @@ int main(void)
     IMU_init();
 
     logging_init();
+
+    ctrl_init();
 
     // Start scheduler
     osKernelStart();
