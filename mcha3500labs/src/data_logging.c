@@ -102,7 +102,7 @@ static void log_imu(void)
     /* Read IMU */
     IMU_read();
     /* Get the imu angle from accelerometer readings */
-    double Theta_X = get_acc_angle();
+    double Theta_X = get_acc_angleX();
     /* Get the imu X gyro reading */
     float GyroX = get_gyroX();
     /* Read the potentiometer voltage */

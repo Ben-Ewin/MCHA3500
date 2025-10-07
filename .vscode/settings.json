@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "qpas_sub_noblas.h": "c"
+    }
+}

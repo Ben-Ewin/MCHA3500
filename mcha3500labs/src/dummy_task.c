@@ -73,15 +73,25 @@ void dummy_task_update(void *arg)
         // // Non-blocking delay to wait
 
 
-        // IMU_read();
-        // float GyroX = get_gyroX();
-        // float AccY = get_accY();
-        // float AccZ = get_accZ();
-        // double Theta_X = get_acc_angle();
-        // // printf("AccX: %lf\n", GyroX);
-        // // printf("AccY: %lf\n", AccY);
-        // // printf("AccZ: %lf\n\n", AccZ);
-        // printf("Theta X: %lf\n", Theta_X);
+        IMU_read();
+        float GyroX = get_gyroX();
+        float GyroY = get_gyroY();
+        float GyroZ = get_gyroZ();
+        float AccX = get_accX();
+        float AccY = get_accY();
+        float AccZ = get_accZ();
+        double Theta_X = get_acc_angleX();
+        double Theta_Y = get_acc_angleY();
+        double Theta_Z = get_acc_angleZ();
+        // printf("GyroX: %lf\n", GyroX);
+        // printf("GyroY: %lf\n", GyroY);
+        // printf("GyroZ: %lf\n", GyroZ);
+        // printf("AccX: %lf\n", AccX);
+        // printf("AccY: %lf\n", AccY);
+        // printf("AccZ: %lf\n", AccZ);
+        printf("Theta X: %lf\n", Theta_X);
+        printf("Theta Y: %lf\n", Theta_Y);
+        printf("Theta Z: %lf\n\n", Theta_Z);
 
         
         osDelay(1000);

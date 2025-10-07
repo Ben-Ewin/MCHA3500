@@ -37,6 +37,39 @@ float get_gyroX(void)
     return gyroX;
 }
 
+float get_gyroY(void)
+{
+    /* Convert accelleration reading to ms^-2 */
+    int16_t gyroY_raw = IMU_datastruct.Gyroscope_Y;
+
+    // scale = size of data type/(g * acceleration range)
+    float gyroY = (float)gyroY_raw / 7.5096e+03f;
+    /* return the Y acceleration */
+    return gyroY;
+}
+
+float get_gyroZ(void)
+{
+    /* Convert accelleration reading to ms^-2 */
+    int16_t gyroZ_raw = IMU_datastruct.Gyroscope_Z;
+
+    // scale = size of data type/(g * acceleration range)
+    float gyroZ = (float)gyroZ_raw / 7.5096e+03f;
+    /* return the Y acceleration */
+    return gyroZ;
+}
+
+float get_accX(void)
+{
+    /* Convert accelleration reading to ms^-2 */
+    int16_t accX_raw = IMU_datastruct.Accelerometer_X;
+
+    // scale = size of data type/(g * acceleration range)
+    float accX = (float)accX_raw / 835.0408f;
+    /* return the Y acceleration */
+    return accX;
+}
+
 float get_accY(void)
 {
     /* Convert accelleration reading to ms^-2 */
@@ -59,10 +92,26 @@ float get_accZ(void)
     return accZ;
 }
 
-double get_acc_angle(void)
+double get_acc_angleX(void)
 {
     /* compute IMU angle using accY and accZ using atan2 */
     double Theta_X = atan2(get_accZ(), get_accY());
     /* return the IMU angle */
     return Theta_X;
+}
+
+double get_acc_angleY(void)
+{
+    /* compute IMU angle using accY and accZ using atan2 */
+    double Theta_Y = atan2(get_accX(), get_accZ());
+    /* return the IMU angle */
+    return Theta_Y - (M_PI/2);
+}
+
+double get_acc_angleZ(void)
+{
+    /* compute IMU angle using accY and accZ using atan2 */
+    double Theta_Z = atan2(get_accY(), get_accX());
+    /* return the IMU angle */
+    return Theta_Z;
 }
